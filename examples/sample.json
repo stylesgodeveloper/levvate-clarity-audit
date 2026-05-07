@@ -1,0 +1,30 @@
+{
+  "url": "https://example-consultant.com",
+  "audit": {
+    "business_summary": "A boutique consulting firm offering business strategy and operations advisory services to mid-size service businesses, with no specific industry focus stated on the homepage.",
+    "clarity_score": 5,
+    "clarity_reasoning": "The headline 'Helping Businesses Grow' identifies the company as a consultancy but does not specify what kind of growth, for whom, or what makes them different. A first-time visitor would need to scroll several sections to understand the actual offering.",
+    "suggestions": [
+      {
+        "issue": "The headline 'Helping Businesses Grow' is generic and does not communicate who the firm serves or what outcome they deliver.",
+        "action": "Rewrite the headline to name the target client and the concrete outcome, for example: 'Operations consulting for service businesses doing $1M to $10M in revenue.' Pair with a one-line subheading that names the primary deliverable.",
+        "priority": "high"
+      },
+      {
+        "issue": "The primary CTA is 'Learn More', which is a low-commitment ask and does not move the visitor toward booking.",
+        "action": "Replace 'Learn More' with a specific next step like 'Book a 30-minute strategy call' or 'Get a free operations audit.' Place the button above the fold and repeat after the services section.",
+        "priority": "high"
+      },
+      {
+        "issue": "There are no client logos, testimonials, or case study links visible above the fold, so a visitor has no quick trust signal.",
+        "action": "Add a row of 4 to 6 client logos directly under the hero, plus one testimonial pull-quote with the client's name, role, and company. Link each logo to a one-page case study.",
+        "priority": "medium"
+      }
+    ]
+  },
+  "meta": {
+    "text_chars": 4280,
+    "truncated": false,
+    "scrape_warning": null
+  }
+}
