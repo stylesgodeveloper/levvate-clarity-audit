@@ -7,6 +7,13 @@ export const runtime = "nodejs";
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
+function normalizeUrl(input: string): string {
+  const trimmed = input.trim().replace(/^["']|["']$/g, "");
+  if (!trimmed) return "";
+  if (/^https?:\/\//i.test(trimmed)) return trimmed;
+  return `https://${trimmed}`;
+}
+
 async function scrape(url: string): Promise<string> {
   const res = await fetch(url, {
     headers: {
@@ -15,6 +22,7 @@ async function scrape(url: string): Promise<string> {
       Accept: "text/html,application/xhtml+xml",
     },
     redirect: "follow",
+    signal: AbortSignal.timeout(15_000),
   });
   if (!res.ok) {
     throw new Error(`fetch failed: ${res.status} ${res.statusText}`);
@@ -45,8 +53,9 @@ export async function POST(req: NextRequest) {
       );
     }
     const body = await req.json();
-    const url: string = body.url ?? "";
+    const rawUrl: string = body.url ?? "";
     const manualText: string = body.manualText ?? "";
+    const url = normalizeUrl(rawUrl);
 
     if (!url && !manualText) {
       return NextResponse.json(
@@ -69,7 +78,8 @@ export async function POST(req: NextRequest) {
     if (!text) {
       return NextResponse.json(
         {
-          error: `could not get page text. ${scrapeError ?? ""}. Paste the homepage text manually and retry.`,
+          error: `Could not fetch the page. ${scrapeError ?? ""}. Paste the homepage text manually below and try again.`,
+          scrape_failed: true,
         },
         { status: 422 }
       );

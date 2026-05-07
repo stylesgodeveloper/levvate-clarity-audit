@@ -44,6 +44,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<ApiResponse | null>(null);
   const [err, setErr] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
 
   async function run() {
     setLoading(true);
@@ -56,13 +57,23 @@ export default function Home() {
         body: JSON.stringify({ url: url.trim(), manualText: manualText.trim() }),
       });
       const j = await res.json();
-      if (!res.ok) throw new Error(j.error || "request failed");
+      if (!res.ok) {
+        if (j.scrape_failed) setShowManual(true);
+        throw new Error(j.error || "request failed");
+      }
       setData(j);
     } catch (e) {
       setErr(e instanceof Error ? e.message : "unknown error");
     } finally {
       setLoading(false);
     }
+  }
+
+  function copyJson() {
+    if (!data?.audit) return;
+    navigator.clipboard.writeText(JSON.stringify(data.audit, null, 2));
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
   }
 
   const score = data?.audit.clarity_score;
@@ -124,12 +135,20 @@ export default function Home() {
             {loading ? "Analyzing..." : "Run audit"}
           </button>
           {data && (
-            <button
-              onClick={() => window.print()}
-              className="px-4 py-2 border border-gray-300 rounded text-sm hover:bg-gray-50"
-            >
-              Export PDF
-            </button>
+            <>
+              <button
+                onClick={() => window.print()}
+                className="px-4 py-2 border border-gray-300 rounded text-sm hover:bg-gray-50"
+              >
+                Export PDF
+              </button>
+              <button
+                onClick={copyJson}
+                className="px-4 py-2 border border-gray-300 rounded text-sm hover:bg-gray-50"
+              >
+                {copied ? "Copied" : "Copy JSON"}
+              </button>
+            </>
           )}
         </div>
       </section>
@@ -142,9 +161,15 @@ export default function Home() {
 
       {data?.audit && (
         <article className="space-y-4">
-          <div className="text-xs text-gray-500">
-            Audit for <span className="font-mono">{data.url}</span>
-            {data.meta.truncated && " (text truncated to 8000 chars)"}
+          <div className="text-xs text-gray-500 flex flex-wrap gap-x-3 gap-y-1">
+            <span>Audit for <span className="font-mono">{data.url}</span></span>
+            <span>· {data.meta.text_chars.toLocaleString()} chars analyzed</span>
+            {data.meta.truncated && (
+              <span className="text-amber-700">· truncated to 8000 chars sent to model</span>
+            )}
+            {data.meta.scrape_warning && (
+              <span className="text-amber-700">· scrape warning: {data.meta.scrape_warning}</span>
+            )}
           </div>
 
           <Card title="What this business does">
