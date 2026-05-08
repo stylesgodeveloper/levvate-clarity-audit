@@ -1,23 +1,36 @@
 {
     "url": "https://stripe.com",
     "audit": {
-        "business_summary": "Stripe provides financial infrastructure that enables businesses to accept payments, offer financial services, and implement custom revenue models globally, serving startups to Fortune 100 companies.",
-        "clarity_score": 9,
-        "clarity_reasoning": "Stripe passes the 5-second test decisively. The headline \"Financial infrastructure to grow your revenue\" immediately answers what the business does and who benefits (anyone wanting to grow). The subheading reinforces this with concrete outcomes (accept payments, offer financial services, implement custom revenue models). The single dominant CTA (\"Get started\") is unmissable, and the social proof (135+ currencies, $1.9T processed, 99.999% uptime) builds trust without confusing the core message. No jargon, no feature dumping before clarity.",
+        "business_summary": "Stripe provides financial infrastructure and payment processing tools that enable businesses to accept payments, offer financial services, and scale revenue globally across any business model\u2014from solo startups to Fortune 100 enterprises.",
+        "clarity_score": 8,
+        "clarity_reasoning": "Stripe delivers exceptional service clarity (payment processing and financial infrastructure is unambiguous) and backs it with best-in-class credibility markers: named Fortune 100 clients, real case studies with named teams (Hertz, URBN, Instacart, Le Monde), specific metrics ($1.9T volume, 99.999% uptime, 200M+ subscriptions), and a single clear CTA (\"Sign up with Google\"). The site scores slightly below 9 because niche specificity is broad (all business models, all geographies) rather than specialized, and the hero copy emphasizes product comprehensiveness over customer outcome.",
         "suggestions": [
             {
-                "issue": "Get started Sign up with Google Flexible solutions for every business model.",
-                "why_it_matters": "The CTA lacks directional clarity\u2014'Get started' could mean signing up, building an integration, or requesting a consultation, creating friction for different visitor segments (developers vs. business decision-makers).",
-                "fix": "Replace with two distinct CTAs: 'Start accepting payments' (directs to signup flow) and 'Explore for enterprises' (directs to sales/consultation path). This acknowledges the StoryBrand principle that different personas need different next steps.",
+                "pillar": "CLARITY",
+                "issue": "Grow your business with a comprehensive set of payments and financial tools\u2060\u2014\u2060designed to work individually or together.",
+                "why_it_matters": "This repeats twice and frames Stripe as the hero ('comprehensive set of tools') rather than naming the customer's problem or outcome; a first-time visitor cannot answer 'what will this let me do that I can't now?' in five seconds.",
+                "fix": "Replace with: 'Launch global payments in days, not months. Add credit card processing, subscriptions, marketplace payouts, or embedded finance\u2014one API, one integration partner.' This names the customer's problem (slow go-to-market) and the outcome (speed), not the feature inventory.",
+                "priority": "high"
+            },
+            {
+                "pillar": "CONVERSION",
+                "issue": "Get started Sign up with Google",
+                "why_it_matters": "The primary CTA is buried mid-page and competes visually with 'Contact sales' and 'Start now' in the navigation; multiple CTAs dilute conversion intent, especially for mid-market prospects who need a human conversation before signup.",
+                "fix": "Restructure above-the-fold hero: Keep one prominent CTA as 'Schedule a Demo' or 'Talk to Sales' in the hero button area. Reserve 'Sign up with Google' for a secondary, lower-friction path below. This clarifies whether Stripe is targeting self-serve (signup) or enterprise (sales-led) segments.",
                 "priority": "medium"
             },
             {
-                "issue": "Grow your business with a comprehensive set of payments and financial tools\u2060\u2014\u2060designed to work individually or together.",
-                "why_it_matters": "This sentence repeats the subheading almost verbatim ('comprehensive set of payments and financial tools') and dilutes the immediate value by focusing on how tools work together rather than outcomes for the visitor.",
-                "fix": "Replace with outcome-focused language: 'Accept payments in 135+ currencies, manage recurring billing for 200M+ subscriptions, and issue cards\u2014all from one platform.' This uses concrete proof instead of feature adjacency.",
-                "priority": "low"
+                "pillar": "CREDIBILITY",
+                "issue": "50% of Fortune 100 companies have used Stripe to grow their businesses",
+                "why_it_matters": "This statistic is impressive but anonymous; the case studies below it (Hertz, URBN, Instacart) are not visible at above the fold, so a visitor scanning the hero section sees a big claim without immediate proof, weakening trust in the crucial first five seconds.",
+                "fix": "Move one named logo and one-sentence outcome into the hero (e.g., 'Hertz unified $XXB in global commerce with Stripe\u2014deployed in under 90 days. 50% of Fortune 100 companies have chosen Stripe.') or add 2\u20133 customer logos directly below this claim, above the case study section. Proof must sit next to the claim.",
+                "priority": "medium"
             }
-        ]
+        ],
+        "levvate_project_fit": {
+            "tier": "MAINTENANCE_OR_SEO",
+            "rationale": "Stripe's homepage excels on clarity (unambiguous service, named Fortune 100 clients, real testimonials from named teams, specific metrics, and a working signup CTA); the site already does its job\u2014converting both self-serve and enterprise prospects. The opportunity is not messaging or conversion flow redesign, but search dominance and ongoing competitive optimization."
+        }
     },
     "meta": {
         "text_chars": 12878,
@@ -25,8 +38,14 @@
         "scrape_warning": null,
         "model": "claude-haiku-4-5-20251001",
         "framework": [
-            "5-second test (Nielsen Norman)",
-            "StoryBrand SB7"
+            "5-second test",
+            "StoryBrand SB7",
+            "Levvate service-business rubric"
+        ],
+        "credibility_signals_detected": [
+            "certified",
+            "rated",
+            "client count claim"
         ]
     }
 }

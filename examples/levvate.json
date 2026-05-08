@@ -1,0 +1,49 @@
+{
+    "url": "https://levvate.com",
+    "audit": {
+        "business_summary": "Levvate builds custom websites for service-based businesses (consultants, agencies, law firms, medical practices, contractors, financial advisors) that generate leads by clarifying value, building credibility, and optimizing for conversion\u2014not just aesthetics.",
+        "clarity_score": 8,
+        "clarity_reasoning": "Levvate clearly names its service (website design), specific niches (consultant, agency, medical practice, law firm, contractor, financial advisor), and the core problem (websites that don't convert leads). The headline \"Turn Your Website Into a Business-Generating Engine\" frames the outcome, not the feature. The free site assessment CTA is prominent and single. However, the messaging relies on aspirational language (\"trust,\" \"authority,\" \"growth-focused\") rather than concrete problem anchors (\"struggling with lead generation?\" or \"getting clicks but no calls?\"), which slightly weakens visitor resonance on the 5-second test.",
+        "suggestions": [
+            {
+                "pillar": "CLARITY",
+                "issue": "Turn Traffic into Leads with a Team That Gets It",
+                "why_it_matters": "The subheading uses vague attribution ('a team that gets it') without saying what problem the prospect actually has or why Levvate is the answer\u2014it fails the StoryBrand customer-hero framing and doesn't anchor the visitor's fear or frustration.",
+                "fix": "Replace with: \"Tired of websites that look good but don't book calls? We build sites that clarify your niche, prove your expertise, and convert visitors into leads.\"",
+                "priority": "high"
+            },
+            {
+                "pillar": "CREDIBILITY",
+                "issue": "\"Our Clients\" section appears in nav but no client logos, testimonials, or named case studies are visible above the fold.",
+                "why_it_matters": "A service business selling web design needs to show proof of past success immediately\u2014the absence of named clients, logos, or even a single quote means visitors can't verify Levvate practices what it preaches before deciding to book a free assessment.",
+                "fix": "Add a testimonial block or client logo carousel above the 'Get your free site assessment' CTA. Example: \"'Levvate increased our lead volume 40% in three months.' \u2014 [Client Name], [Firm Type]\" with real headshot or company logo.",
+                "priority": "high"
+            },
+            {
+                "pillar": "CONVERSION",
+                "issue": "\"Get your free site assessment\" CTA text",
+                "why_it_matters": "The CTA is clear and positioned well, but generic\u2014'Get' is passive and doesn't create urgency or specificity that converts browsers into committed bookers compared to action-driven alternatives.",
+                "fix": "Rewrite button text to: \"Book Your Free Assessment\" or \"Schedule My Free Site Audit\" to increase perceived commitment and urgency.",
+                "priority": "medium"
+            }
+        ],
+        "levvate_project_fit": {
+            "tier": "OPTIMIZATION",
+            "rationale": "Clear service, named niches, working CTA, and clean design (score 8), but homepage lacks credibility markers (no visible testimonials, case studies, or named clients above the fold despite 'Our Clients' reference) and uses soft, aspirational language instead of concrete problem framing\u2014a messaging and conversion refresh will unlock higher lead-booking rates."
+        }
+    },
+    "meta": {
+        "text_chars": 2347,
+        "truncated": false,
+        "scrape_warning": null,
+        "model": "claude-haiku-4-5-20251001",
+        "framework": [
+            "5-second test",
+            "StoryBrand SB7",
+            "Levvate service-business rubric"
+        ],
+        "credibility_signals_detected": [
+            "review"
+        ]
+    }
+}

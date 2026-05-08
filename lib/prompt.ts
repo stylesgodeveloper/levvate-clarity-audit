@@ -65,16 +65,18 @@ export const userPrompt = (
   url: string,
   text: string,
   credibilitySignals: string[]
-) =>
-  `Website URL: ${url}
+) => {
+  const signalsLine = credibilitySignals.length
+    ? credibilitySignals.join(", ")
+    : "none detected";
+  return `[INSTRUMENTATION — for your reasoning only, do NOT quote this section in any suggestion's "issue" field]
+Website URL: ${url}
+Pre-extracted credibility-keyword hits: ${signalsLine}
 
-CREDIBILITY SIGNALS DETECTED IN PAGE: ${
-    credibilitySignals.length ? credibilitySignals.join(", ") : "none"
-  }
-
-Homepage text (extracted, may be truncated):
----
+[HOMEPAGE BODY TEXT — this is what visitors actually see. ALL "issue" quotes MUST come from this section, verbatim.]
+=====
 ${text.slice(0, 8000)}
----
+=====
 
 Audit this homepage for Levvate. Score on the service-business rubric, tag each suggestion with one of CLARITY / CREDIBILITY / CONVERSION, and classify the Project Fit tier. Submit via the submit_clarity_audit tool.`;
+};

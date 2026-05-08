@@ -1,29 +1,36 @@
 {
     "url": "https://linear.app",
     "audit": {
-        "business_summary": "Linear is an AI-native issue tracking and product development system that helps engineering teams plan, build, and ship products faster by integrating work management, AI agents, and code review in one platform.",
+        "business_summary": "Linear is a product development system that helps software teams plan, build, and ship products faster by integrating issue tracking, AI agents, and team workflows into a single platform.",
         "clarity_score": 6,
-        "clarity_reasoning": "Linear's headline \"The product development system for teams and agents\" answers what the tool does, but buries the core value prop (speed, AI-powered workflows) below the fold and repeats the same tagline three times. A visitor can infer it's for product teams, but the specific outcome (ship faster, reduce noise) requires scrolling past feature demos. The messaging leans heavily on feature showcases (Issues, Agents, Diffs, Cycles) rather than leading with a concrete problem solved or outcome delivered. Multiple competing calls to action (Contact, Open app, Sign up, Docs) dilute focus.",
+        "clarity_reasoning": "The site clearly names the service (product development system) and primary benefit (ship with high velocity), but niche specificity is weak\u2014\"teams and agents\" is too broad and could mean startups, enterprises, or open-source projects. Credibility markers (client count claim, reviews keyword detected) are present but buried; no testimonials, named case studies, or customer logos appear above the fold. The primary CTA (\"Contact Docs Open app Log in Sign up\") is cluttered with competing actions, diluting the conversion path for new prospects.",
         "suggestions": [
             {
+                "pillar": "CLARITY",
                 "issue": "The product development system for teams and agents",
-                "why_it_matters": "This headline fails the 5-second test because it doesn't clarify the outcome or value\u2014any project management tool could claim the same thing. A visitor doesn't know if Linear solves speed, collaboration, code quality, or visibility.",
-                "fix": "Replace with: 'Ship products 3x faster with AI-powered issue tracking and development workflows' or 'The AI system that turns customer feedback and PRs into shipping velocity'",
+                "why_it_matters": "This headline repeats three times and fails the 5-second test niche question\u2014it does not name the target audience (e.g., 'for engineering teams building AI-native products') or the specific problem being solved, leaving visitors unclear on whether Linear is for them.",
+                "fix": "Change to: 'The AI-native product development system for engineering teams shipping code faster.' This names the specific niche (engineering teams), the use-case context (AI-native), and the outcome (shipping faster).",
                 "priority": "high"
             },
             {
-                "issue": "Issue tracking is dead linear.app/next \u2192 Linear Inbox My issues Reviews Pulse Workspace Initiatives Projects More",
-                "why_it_matters": "This line appears to position Linear as a next-gen replacement for issue tracking, but it's immediately followed by a feature menu with no context about why issue tracking is 'dead' or what Linear does instead. It creates confusion rather than clarity.",
-                "fix": "Replace with a single, benefit-driven statement like: 'AI agents handle triage, prioritization, and code review\u2014so your team focuses on shipping.' This reinforces the core differentiator (AI automation) over a feature list.",
+                "pillar": "CONVERSION",
+                "issue": "Contact Docs Open app Log in Sign up",
+                "why_it_matters": "Five competing actions above the fold (Contact, Docs, Open app, Log in, Sign up) fragment visitor intent and violate the single-primary-CTA rule; a new prospect doesn't know whether to book a demo, read docs, or try the free tier first.",
+                "fix": "Replace with a single primary CTA: 'Schedule a demo' (as a prominent button), with secondary nav links moved to a collapsed menu or footer. The button should appear immediately after the hero headline.",
                 "priority": "high"
             },
             {
-                "issue": "Purpose-built for planning and building products. Designed for the AI era.",
-                "why_it_matters": "While this acknowledges the AI angle, 'purpose-built' and 'designed for the AI era' are vague marketing platitudes that don't explain how Linear specifically saves time, reduces friction, or changes workflows. It fails the StoryBrand principle of naming the customer's real problem.",
-                "fix": "Replace with: 'Automatically triage issues, route work to the right person, and delegate complex tasks to AI agents\u2014so teams ship with 100% focus and zero busywork.'",
+                "pillar": "CREDIBILITY",
+                "issue": "No visible testimonials, named clients, or customer logos above the fold.",
+                "why_it_matters": "The instrumentation flagged 'review' and 'client count claim' keywords, suggesting these exist on the site, but they are not surfaced in the hero or upper page sections where trust matters most; a prospect reading the abstract positioning has no proof that real teams trust and use Linear.",
+                "fix": "Add a 'Trusted by' section immediately below the hero with 3\u20135 recognizable customer logos and a sample testimonial quote (e.g., 'Linear reduced our cycle time by 40%' \u2014 Company Name, Title). If real logos cannot be shown, display a stat instead: 'Used by 5,000+ engineering teams' with a link to customer stories.",
                 "priority": "medium"
             }
-        ]
+        ],
+        "levvate_project_fit": {
+            "tier": "OPTIMIZATION",
+            "rationale": "Linear scores 6 on clarity and has clean, modern design with working product features displayed, but the homepage messaging is generic ('purpose-built for planning'), niche targeting is vague ('teams and agents'), and the CTA is fragmented with five competing actions\u2014textbook OPTIMIZATION: strong product bones and brand, weak conversion messaging and primary-action hierarchy."
+        }
     },
     "meta": {
         "text_chars": 9695,
@@ -31,8 +38,14 @@
         "scrape_warning": null,
         "model": "claude-haiku-4-5-20251001",
         "framework": [
-            "5-second test (Nielsen Norman)",
-            "StoryBrand SB7"
+            "5-second test",
+            "StoryBrand SB7",
+            "Levvate service-business rubric"
+        ],
+        "credibility_signals_detected": [
+            "review",
+            "rated",
+            "client count claim"
         ]
     }
 }
