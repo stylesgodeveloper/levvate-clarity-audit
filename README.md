@@ -2,7 +2,16 @@
 
 A 60-minute build for the Levvate AI Automation intern technical assessment, May 2026.
 
+**Live demo:** https://levvate-clarity.vercel.app
+**Repo:** https://github.com/stylesgodeveloper/levvate-clarity-audit
+
 URL in. Out: a 1 to 2 sentence summary of what the business does, a 1 to 10 clarity score with reasoning, and 2 to 3 prioritized suggestions to improve the homepage's clarity.
+
+## Sample audits captured live against the deployed API
+
+- `examples/stripe.json` — stripe.com, score 7 / 10
+- `examples/gentledental.json` — a real multi-location dental practice, score 6 / 10
+- `examples/sample.json` — a synthetic low-clarity consultancy, score 5 / 10
 
 ## How to run
 

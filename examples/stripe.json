@@ -1,0 +1,30 @@
+{
+    "url": "https://stripe.com",
+    "audit": {
+        "business_summary": "Stripe is a financial infrastructure platform that enables businesses to accept payments, offer financial services, and build custom revenue models across online and in-person channels globally.",
+        "clarity_score": 7,
+        "clarity_reasoning": "The value proposition is clear\u2014financial infrastructure for payments and revenue growth\u2014but the homepage prioritizes breadth of features and social proof over a single, compelling entry point. First-time visitors understand what Stripe does, but the messaging dilutes focus across multiple audience segments (enterprises, startups, platforms).",
+        "suggestions": [
+            {
+                "issue": "The primary headline 'Financial infrastructure to grow your revenue' is repeated verbatim twice in the extracted text, suggesting weak hierarchy and no single clear entry point for first-time visitors.",
+                "action": "Replace the second occurrence with a specific, benefit-driven variant tailored to the visitor's most likely use case (e.g., 'Accept payments from day one, scale to billions in transactions' for new businesses).",
+                "priority": "high"
+            },
+            {
+                "issue": "The hero CTA is split between 'Get started' and 'Sign up with Google,' with no clear distinction of what each leads to or which path suits a first-time visitor.",
+                "action": "Consolidate to a single, prominent CTA (e.g., 'Start accepting payments') and move the secondary option below, reducing friction for new prospects.",
+                "priority": "high"
+            },
+            {
+                "issue": "The page leads with enterprise and platform solutions ('50% of Fortune 100,' 'Stripe for platforms') before addressing the majority use case of small-to-mid-market businesses, which may discourage smaller prospects.",
+                "action": "Reorder content sections to feature 'Stripe for startups' and 'Flexible solutions for every business model' higher, reserving enterprise case studies below the fold.",
+                "priority": "medium"
+            }
+        ]
+    },
+    "meta": {
+        "text_chars": 12878,
+        "truncated": true,
+        "scrape_warning": null
+    }
+}

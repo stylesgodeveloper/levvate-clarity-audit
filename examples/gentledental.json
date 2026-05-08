@@ -1,0 +1,30 @@
+{
+    "url": "https://www.gentledental.com",
+    "audit": {
+        "business_summary": "Gentle Dental is a multi-location dental practice in New England offering comprehensive dental services including preventive care, cosmetic dentistry, orthodontics, and oral surgery. With 49 convenient locations and extended hours, they provide award-winning care from top-trained dentists.",
+        "clarity_score": 6,
+        "clarity_reasoning": "The business type is immediately identifiable as a dental practice, and key differentiators (49 locations, convenient hours, award-winning) are communicated, but the homepage is cluttered with navigation and service listings that delay the core value proposition. A first-time visitor must scroll past extensive menus before encountering the main message.",
+        "suggestions": [
+            {
+                "issue": "Navigation menus dominate the above-the-fold experience, listing 40+ location names and 20+ service categories before any value proposition appears.",
+                "action": "Collapse location and service navigation into dropdowns or a search bar. Lead with a single headline (e.g., 'Award-Winning Dental Care at 49 Convenient Locations Near You') and a clear CTA like 'Schedule Now' or 'Find Your Location' in the hero section.",
+                "priority": "high"
+            },
+            {
+                "issue": "The headline 'Quality Dental Care is Right Around the corner' is generic and doesn't communicate what makes Gentle Dental different; the real differentiators (49 locations, 49 years, 200+ providers, extended hours) are buried in the body copy.",
+                "action": "Replace with a benefit-driven headline like '49 Convenient Locations. Award-Winning Dentists. Hours That Fit Your Life.' Position this above the fold with supporting copy on convenience and expertise.",
+                "priority": "high"
+            },
+            {
+                "issue": "The 'New Patient Offer' ($79 exam, x-rays, cleaning, treatment plan) is a strong hook but appears too far down the page and lacks urgency or a prominent CTA button.",
+                "action": "Move the new patient offer into the hero or secondary section with a high-contrast button ('Claim Your $79 New Patient Special'). Include offer expiration or scarcity language to drive conversions.",
+                "priority": "medium"
+            }
+        ]
+    },
+    "meta": {
+        "text_chars": 10602,
+        "truncated": true,
+        "scrape_warning": null
+    }
+}
