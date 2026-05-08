@@ -5,6 +5,7 @@ Built for the Levvate AI Automation intern technical assessment, May 2026.
 **Live web app:** https://levvate-clarity.vercel.app
 **Chrome extension:** [`extension/`](./extension) (load unpacked at `chrome://extensions`)
 **Repo:** https://github.com/stylesgodeveloper/levvate-clarity-audit
+**Demo video:** https://www.loom.com/share/583cc97db4004351b27e973a83e5d4a9
 
 ## Two surfaces, one backend, two real users
 
