@@ -22,14 +22,16 @@ Same backend, same Claude Haiku 4.5 + tool-use call, two surfaces matched to two
 URL in. Out:
 
 - 1 to 2 sentence plain-language summary of what the business does
-- A 1 to 10 clarity score with framework-grounded reasoning
-- 2 to 3 ranked suggestions, each with the verbatim quoted issue, why it matters, and a concrete fix the developer could ship today
+- A 1 to 10 clarity score scored on a service-business rubric (consultants, lawyers, doctors, contractors, financial advisors), not a generic SaaS rubric
+- 2 to 3 ranked suggestions, each tagged with one of Levvate's three pillars (`CLARITY` / `CREDIBILITY` / `CONVERSION`), and containing the verbatim quoted issue, why it matters, and a concrete fix
+- A **Levvate Project Fit** classification (`FULL_REDESIGN` / `OPTIMIZATION` / `MAINTENANCE_OR_SEO`) with rationale so the sales team's queue auto-sorts by opportunity size
 
 ## Sample audits captured live
 
-- `examples/stripe.json` — stripe.com, score 9 / 10 (anchored against Stripe-tier reference)
-- `examples/gentledental.json` — a real multi-location dental practice, score 5 / 10
-- `examples/linear.json` — linear.app, score 6 / 10
+- `examples/levvate.json` — **levvate.com itself**, score 8 / 10, classified as OPTIMIZATION. The tool flags the missing client testimonials above the fold, suggests a problem-anchored hero rewrite, and tightens the "Get your free site assessment" CTA. Auditing the auditee.
+- `examples/gentledental.json` — a real multi-location dental practice, score 7 / 10, OPTIMIZATION
+- `examples/stripe.json` — stripe.com, score 8 / 10, MAINTENANCE_OR_SEO (Stripe is SaaS, audited on the service-business rubric)
+- `examples/linear.json` — linear.app, score 6 / 10, OPTIMIZATION
 
 ## How to run
 
