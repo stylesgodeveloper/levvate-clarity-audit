@@ -70,6 +70,19 @@
     .sug.high { border-color: #dc2626; }
     .sug.medium { border-color: #d97706; }
     .sug.low { border-color: #6b7280; }
+    .sug-meta { display: flex; gap: 6px; align-items: center; margin-bottom: 3px; }
+    .pillar {
+      display: inline-block;
+      padding: 1px 6px;
+      border-radius: 3px;
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      border: 1px solid;
+    }
+    .pillar.CLARITY { background: #eff6ff; color: #1e40af; border-color: #bfdbfe; }
+    .pillar.CREDIBILITY { background: #ecfdf5; color: #065f46; border-color: #a7f3d0; }
+    .pillar.CONVERSION { background: #fff7ed; color: #9a3412; border-color: #fed7aa; }
     .sug-priority {
       font-size: 9px;
       color: #6b7280;
@@ -77,6 +90,22 @@
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
+    .fit-card {
+      margin: 12px 0;
+      padding: 10px 12px;
+      border-radius: 6px;
+      border: 1px solid;
+    }
+    .fit-card.FULL_REDESIGN { background: #fff7ed; border-color: #fed7aa; }
+    .fit-card.OPTIMIZATION { background: #eff6ff; border-color: #bfdbfe; }
+    .fit-card.MAINTENANCE_OR_SEO { background: #ecfdf5; border-color: #a7f3d0; }
+    .fit-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+    .fit-label.FULL_REDESIGN { color: #9a3412; }
+    .fit-label.OPTIMIZATION { color: #1e40af; }
+    .fit-label.MAINTENANCE_OR_SEO { color: #065f46; }
+    .fit-blurb { font-size: 10px; color: #6b7280; margin: 2px 0 4px; }
+    .fit-rationale { font-size: 11px; color: #374151; line-height: 1.4; }
+    .fit-section-label { font-size: 10px; color: #9ca3af; font-weight: 600; margin: 14px 0 4px; text-transform: uppercase; letter-spacing: 0.5px; }
     .sug-issue { font-style: italic; margin: 3px 0; color: #111827; }
     .sug-why { color: #4b5563; line-height: 1.4; }
     .sug-fix { margin-top: 4px; color: #111827; line-height: 1.4; }
@@ -137,6 +166,8 @@
     </div>
     <div class="summary" id="summary"></div>
     <div class="reasoning" id="reasoning"></div>
+    <div id="projectFit"></div>
+    <div class="fit-section-label">Suggestions</div>
     <div id="suggestions"></div>
     <div class="actions">
       <button class="secondary" id="copyHook">Copy outreach hook</button>

@@ -3,10 +3,16 @@
 import { useState } from "react";
 
 type Suggestion = {
+  pillar: "CLARITY" | "CREDIBILITY" | "CONVERSION";
   issue: string;
   why_it_matters: string;
   fix: string;
   priority: "high" | "medium" | "low";
+};
+
+type ProjectFit = {
+  tier: "FULL_REDESIGN" | "OPTIMIZATION" | "MAINTENANCE_OR_SEO";
+  rationale: string;
 };
 
 type Audit = {
@@ -14,6 +20,7 @@ type Audit = {
   clarity_score: number;
   clarity_reasoning: string;
   suggestions: Suggestion[];
+  levvate_project_fit: ProjectFit;
 };
 
 type ApiResponse = {
@@ -23,6 +30,7 @@ type ApiResponse = {
     text_chars: number;
     truncated: boolean;
     scrape_warning: string | null;
+    credibility_signals_detected?: string[];
   };
 };
 
@@ -36,6 +44,30 @@ const priorityLabel = {
   high: "HIGH PRIORITY",
   medium: "MEDIUM",
   low: "LOW",
+} as const;
+
+const pillarStyle = {
+  CLARITY: "bg-blue-50 text-blue-800 border-blue-200",
+  CREDIBILITY: "bg-emerald-50 text-emerald-800 border-emerald-200",
+  CONVERSION: "bg-orange-50 text-orange-800 border-orange-200",
+} as const;
+
+const tierLabel = {
+  FULL_REDESIGN: {
+    label: "Full Redesign",
+    color: "bg-orange-100 text-orange-900 border-orange-300",
+    blurb: "This site needs a ground-up rebuild.",
+  },
+  OPTIMIZATION: {
+    label: "Conversion Optimization",
+    color: "bg-blue-100 text-blue-900 border-blue-300",
+    blurb: "Solid bones. Sharpen messaging and CTAs.",
+  },
+  MAINTENANCE_OR_SEO: {
+    label: "Maintenance / SEO",
+    color: "bg-emerald-100 text-emerald-900 border-emerald-300",
+    blurb: "Site already does its job. Keep it healthy and grow traffic.",
+  },
 } as const;
 
 export default function Home() {
@@ -191,6 +223,19 @@ export default function Home() {
             <p className="text-gray-700 text-sm">{data.audit.clarity_reasoning}</p>
           </Card>
 
+          {data.audit.levvate_project_fit && (() => {
+            const fit = tierLabel[data.audit.levvate_project_fit.tier];
+            return (
+              <Card title="Levvate Project Fit">
+                <div className={`inline-block px-3 py-1 rounded-full border text-sm font-semibold ${fit.color}`}>
+                  {fit.label}
+                </div>
+                <div className="text-xs text-gray-500 mt-2">{fit.blurb}</div>
+                <div className="text-sm text-gray-700 mt-2">{data.audit.levvate_project_fit.rationale}</div>
+              </Card>
+            );
+          })()}
+
           <Card title={`Suggestions (${data.audit.suggestions.length})`}>
             <ul className="space-y-4">
               {data.audit.suggestions.map((s, i) => (
@@ -198,8 +243,15 @@ export default function Home() {
                   key={i}
                   className={`border-l-4 pl-3 ${priorityColor[s.priority]} space-y-1.5`}
                 >
-                  <div className="text-xs font-semibold text-gray-500 tracking-wider">
-                    {priorityLabel[s.priority]}
+                  <div className="flex items-center gap-2">
+                    <span
+                      className={`inline-block text-[10px] font-bold tracking-wider uppercase px-2 py-0.5 rounded border ${pillarStyle[s.pillar]}`}
+                    >
+                      {s.pillar}
+                    </span>
+                    <span className="text-xs font-semibold text-gray-500 tracking-wider">
+                      {priorityLabel[s.priority]}
+                    </span>
                   </div>
                   <div>
                     <span className="text-xs font-semibold text-gray-500 uppercase">Issue: </span>

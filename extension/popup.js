@@ -11,6 +11,13 @@ const suggestionsEl = document.getElementById("suggestions");
 const copyHookBtn = document.getElementById("copyHook");
 const copyJsonBtn = document.getElementById("copyJson");
 const copiedEl = document.getElementById("copied");
+const projectFitEl = document.getElementById("projectFit");
+
+const TIER_LABELS = {
+  FULL_REDESIGN: { label: "Full Redesign", blurb: "Site needs a ground-up rebuild." },
+  OPTIMIZATION: { label: "Conversion Optimization", blurb: "Solid bones. Sharpen messaging and CTAs." },
+  MAINTENANCE_OR_SEO: { label: "Maintenance / SEO", blurb: "Site does its job. Keep it healthy and grow traffic." },
+};
 
 let currentUrl = "";
 let currentAudit = null;
@@ -75,13 +82,31 @@ function render(data) {
   summaryEl.textContent = a.business_summary;
   reasoningEl.textContent = a.clarity_reasoning;
 
+  if (a.levvate_project_fit && TIER_LABELS[a.levvate_project_fit.tier]) {
+    const tier = a.levvate_project_fit.tier;
+    const meta = TIER_LABELS[tier];
+    projectFitEl.innerHTML = `
+      <div class="fit-card ${tier}">
+        <div class="fit-label ${tier}">Levvate Project Fit · ${escapeHtml(meta.label)}</div>
+        <div class="fit-blurb">${escapeHtml(meta.blurb)}</div>
+        <div class="fit-rationale">${escapeHtml(a.levvate_project_fit.rationale)}</div>
+      </div>
+    `;
+  } else {
+    projectFitEl.innerHTML = "";
+  }
+
   suggestionsEl.innerHTML = a.suggestions
     .map((s) => {
       const why = s.why_it_matters || "";
       const fix = s.fix || s.action || "";
+      const pillar = s.pillar || "";
       return `
     <div class="sug ${escapeHtml(s.priority)}">
-      <div class="sug-priority">${escapeHtml(s.priority)} priority</div>
+      <div class="sug-meta">
+        ${pillar ? `<span class="pillar ${escapeHtml(pillar)}">${escapeHtml(pillar)}</span>` : ""}
+        <span class="sug-priority">${escapeHtml(s.priority)} priority</span>
+      </div>
       <div class="sug-issue">&ldquo;${escapeHtml(s.issue)}&rdquo;</div>
       ${why ? `<div class="sug-why">${escapeHtml(why)}</div>` : ""}
       <div class="sug-fix"><span class="sug-fix-label">Fix:</span> ${escapeHtml(fix)}</div>

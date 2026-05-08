@@ -37,7 +37,47 @@ function normalizeUrl(input: string): string {
   return `https://${trimmed}`;
 }
 
-async function scrape(url: string): Promise<string> {
+const CREDIBILITY_KEYWORDS = [
+  "testimonial",
+  "review",
+  "case study",
+  "case studies",
+  "trusted by",
+  "5 star",
+  "five star",
+  "client logo",
+  "as seen in",
+  "featured in",
+  "certified",
+  "accredited",
+  "rated",
+  "stars",
+  "google reviews",
+  "yelp",
+  "trustpilot",
+];
+
+function extractCredibilitySignals(text: string): string[] {
+  const lower = text.toLowerCase();
+  const found = new Set<string>();
+  for (const kw of CREDIBILITY_KEYWORDS) {
+    if (lower.includes(kw)) found.add(kw);
+  }
+  // Star count pattern: "4.9", "5.0", etc., near "star" or rating
+  if (/\b[1-5]\.\d\s*(?:\/|out of|stars?)/i.test(text)) {
+    found.add("numeric star rating");
+  }
+  // "200+ clients", "500+ businesses" pattern
+  if (/\b\d{2,}\+?\s+(?:clients?|customers?|businesses|companies)/i.test(text)) {
+    found.add("client count claim");
+  }
+  return Array.from(found);
+}
+
+async function scrape(url: string): Promise<{
+  text: string;
+  credibilitySignals: string[];
+}> {
   const res = await fetch(url, {
     headers: {
       "User-Agent":
@@ -51,7 +91,7 @@ async function scrape(url: string): Promise<string> {
     throw new Error(`fetch failed: ${res.status} ${res.statusText}`);
   }
   const html = await res.text();
-  return html
+  const text = html
     .replace(/<script[\s\S]*?<\/script>/gi, " ")
     .replace(/<style[\s\S]*?<\/style>/gi, " ")
     .replace(/<noscript[\s\S]*?<\/noscript>/gi, " ")
@@ -59,6 +99,7 @@ async function scrape(url: string): Promise<string> {
     .replace(/<[^>]+>/g, " ")
     .replace(/\s+/g, " ")
     .trim();
+  return { text, credibilitySignals: extractCredibilitySignals(text) };
 }
 
 export async function POST(req: NextRequest) {
@@ -82,14 +123,25 @@ export async function POST(req: NextRequest) {
     }
 
     let text = manualText.trim();
+    let credibilitySignals: string[] = [];
     let scrapeError: string | null = null;
     if (!text && url) {
       try {
-        text = await scrape(url);
+        const result = await scrape(url);
+        text = result.text;
+        credibilitySignals = result.credibilitySignals;
       } catch (e) {
         scrapeError =
           e instanceof Error ? e.message : "unknown scrape error";
       }
+    } else if (text) {
+      // For manual paste, run signal extraction on the pasted text too
+      // (defined inline to avoid double-scraping)
+      const lower = text.toLowerCase();
+      const found = new Set<string>();
+      const kws = ["testimonial", "review", "case study", "trusted by", "rated", "stars"];
+      for (const kw of kws) if (lower.includes(kw)) found.add(kw);
+      credibilitySignals = Array.from(found);
     }
 
     if (!text) {
@@ -104,7 +156,7 @@ export async function POST(req: NextRequest) {
 
     const msg = await client.messages.create({
       model: "claude-haiku-4-5-20251001",
-      max_tokens: 1500,
+      max_tokens: 1800,
       system: SYSTEM_PROMPT,
       tools: [
         {
@@ -116,7 +168,10 @@ export async function POST(req: NextRequest) {
       ],
       tool_choice: { type: "tool", name: TOOL_NAME },
       messages: [
-        { role: "user", content: userPrompt(url || "(pasted)", text) },
+        {
+          role: "user",
+          content: userPrompt(url || "(pasted)", text, credibilitySignals),
+        },
       ],
     });
 
@@ -138,7 +193,8 @@ export async function POST(req: NextRequest) {
         truncated: text.length > 8000,
         scrape_warning: scrapeError,
         model: "claude-haiku-4-5-20251001",
-        framework: ["5-second test (Nielsen Norman)", "StoryBrand SB7"],
+        framework: ["5-second test", "StoryBrand SB7", "Levvate service-business rubric"],
+        credibility_signals_detected: credibilitySignals,
       },
     });
   } catch (err) {
