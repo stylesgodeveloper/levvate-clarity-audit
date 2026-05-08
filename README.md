@@ -59,15 +59,37 @@ Open http://localhost:3000, paste a URL, hit "Run audit." If a site blocks scrap
 
 **Crude HTML-to-text scraping:** Regex-based, not a real DOM parser. Misses nuance like image alt text and structured data. A v2 would use `cheerio` plus a Readability extractor and pull `og:` meta tags into the prompt.
 
-## Things I would build next
+## Roadmap if hired (priority-ranked)
 
-- Crawl `/about`, `/pricing`, `/services`, `/testimonials` instead of homepage only
-- Calibrate the 1 to 10 rubric against a labeled set of 20 sites (golden set + grading prompt)
-- Per-section scoring (headline, value prop, CTA, trust signals, mobile readability)
-- Tool-use mode on the Anthropic SDK so the schema is enforced at the model boundary, not just by post-hoc validation
+The 60-minute build is the foundation. Here is what I would ship in the first sprint, with effort estimates.
+
+**Day 1 quick wins (already shipped post-call as v0.2):**
+
+1. **Service-business rubric.** Replace the generic SaaS rubric with one tuned to Levvate's actual customer base (consultants, lawyers, doctors, contractors, financial advisors). Score on service clarity, niche specificity, problem framing, credibility markers above the fold, booking CTA strength, and trust design (real photos vs stock, named team vs anonymous "we"). Half-day patch.
+2. **Levvate Project Fit classifier.** Each audit returns a tier (`FULL_REDESIGN` / `OPTIMIZATION` / `MAINTENANCE_OR_SEO`) with rationale, so the sales team's queue auto-sorts by opportunity size. A Full Redesign prospect is roughly 10× the revenue of a Maintenance prospect. Half-day patch.
+3. **Three-pillar tagging.** Each suggestion is tagged with one of Levvate's own pillars (`CLARITY` / `CREDIBILITY` / `CONVERSION`), pulled directly from levvate.com's three-section structure. Output reads as native Levvate voice. 1-hour patch.
+4. **Credibility-signal pre-extraction at scrape time.** Detect "testimonial", "review", "client", "case study", "trusted by", star ratings, etc. and feed the structural signals into the prompt as context, not just raw text. 1-hour patch.
+
+**Sprint 2 (high ROI, 1-2 day each):**
+
+5. **Vision-based audit.** Send the page screenshot alongside the text via Claude's vision API. The model can then comment on visual hierarchy, photo authenticity (real vs stock), white space, color contrast, and mobile readability. This is where the audit moves from "text clarity" to "design clarity," which is what Levvate actually sells. Half-day, biggest single quality jump.
+6. **Multi-page crawl.** Audit the homepage AND `/about`, `/services`, `/pricing`, `/testimonials` instead of homepage only. Aggregate score plus per-page weak spots. 1 day.
+7. **HubSpot write-back.** Button on the extension: "Push to HubSpot." Writes the audit JSON plus Project Fit tier as custom properties on the matching contact. The sales team's HubSpot queue auto-sorts by tier. 1 day.
+8. **Persona-tuned rubrics.** Different scoring weights per niche. Medical wants HIPAA / credentials / patient testimonials. Legal wants case results / bar admissions / specific practice areas. Contractors want before-after photos / licenses / service area. Mirrors Levvate's actual customer segments. 1-2 days.
+9. **Email-gated funnel.** Show summary plus score for free, gate the three fixes plus Project Fit behind email capture. Same lead-capture mechanics as today, instant value on top. 2 hours.
+
+**Sprint 3 (the killer UX play):**
+
+10. **Annotation drill-down (Tier 1).** Content script that overlays the page in the Chrome extension. User hovers any DOM element (hero, CTA, testimonial section), gets an "Audit this section" tooltip. Click sends that element's HTML plus a screenshot region to a new `/api/analyze-section` endpoint. Like Chrome DevTools, but for clarity. 1-2 days.
+11. **Live overlay annotations (Tier 2).** After running the page audit, the extension highlights each problematic element directly on the page with a colored badge. Click a suggestion in the popup, the element on the page glows. Sales team can screenshot the annotated page and paste it into a cold email. 3 days.
+12. **Drift detection.** Save audits, re-audit monthly, flag score deltas. "This prospect's site got worse since last month — perfect re-engagement moment." 2-3 days.
+
+**Production hardening (any time):**
+
+- Calibrate the 1 to 10 rubric against a labeled set of 20 sites with a golden-set grading prompt
+- Per-section scoring (headline, value prop, CTA, trust signals, mobile)
 - Rate limiting and an API key gate for the production endpoint
 - Real PDF rendering via `puppeteer` for emailable reports; cache by URL hash
-- HubSpot integration: write the audit object to a CRM property and tag the lead automatically
 
 ## Stack
 
