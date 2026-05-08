@@ -4,7 +4,8 @@ import { useState } from "react";
 
 type Suggestion = {
   issue: string;
-  action: string;
+  why_it_matters: string;
+  fix: string;
   priority: "high" | "medium" | "low";
 };
 
@@ -195,16 +196,22 @@ export default function Home() {
               {data.audit.suggestions.map((s, i) => (
                 <li
                   key={i}
-                  className={`border-l-4 pl-3 ${priorityColor[s.priority]}`}
+                  className={`border-l-4 pl-3 ${priorityColor[s.priority]} space-y-1.5`}
                 >
                   <div className="text-xs font-semibold text-gray-500 tracking-wider">
                     {priorityLabel[s.priority]}
                   </div>
-                  <div className="font-medium text-gray-900 mt-1">
-                    Issue: {s.issue}
+                  <div>
+                    <span className="text-xs font-semibold text-gray-500 uppercase">Issue: </span>
+                    <span className="text-gray-900 italic">&ldquo;{s.issue}&rdquo;</span>
                   </div>
-                  <div className="text-gray-700 text-sm mt-1">
-                    Action: {s.action}
+                  <div>
+                    <span className="text-xs font-semibold text-gray-500 uppercase">Why it matters: </span>
+                    <span className="text-gray-700 text-sm">{s.why_it_matters}</span>
+                  </div>
+                  <div>
+                    <span className="text-xs font-semibold text-gray-500 uppercase">Fix: </span>
+                    <span className="text-gray-800 text-sm">{s.fix}</span>
                   </div>
                 </li>
               ))}

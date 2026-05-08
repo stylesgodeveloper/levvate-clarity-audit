@@ -1,11 +1,34 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { NextRequest, NextResponse } from "next/server";
-import { ClarityAuditSchema } from "@/lib/schema";
+import {
+  ClarityAuditSchema,
+  CLARITY_AUDIT_TOOL_INPUT_SCHEMA,
+} from "@/lib/schema";
 import { SYSTEM_PROMPT, userPrompt } from "@/lib/prompt";
 
 export const runtime = "nodejs";
+export const maxDuration = 60;
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+
+const TOOL_NAME = "submit_clarity_audit";
+
+const CORS_HEADERS = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type",
+};
+
+export async function OPTIONS() {
+  return new Response(null, { status: 204, headers: CORS_HEADERS });
+}
+
+function corsJson(body: unknown, init?: { status?: number }) {
+  return NextResponse.json(body, {
+    status: init?.status ?? 200,
+    headers: CORS_HEADERS,
+  });
+}
 
 function normalizeUrl(input: string): string {
   const trimmed = input.trim().replace(/^["']|["']$/g, "");
@@ -38,16 +61,10 @@ async function scrape(url: string): Promise<string> {
     .trim();
 }
 
-function extractJson(text: string): unknown {
-  const match = text.match(/\{[\s\S]*\}/);
-  if (!match) throw new Error("no JSON object found in model output");
-  return JSON.parse(match[0]);
-}
-
 export async function POST(req: NextRequest) {
   try {
     if (!process.env.ANTHROPIC_API_KEY) {
-      return NextResponse.json(
+      return corsJson(
         { error: "ANTHROPIC_API_KEY not set on server" },
         { status: 500 }
       );
@@ -58,7 +75,7 @@ export async function POST(req: NextRequest) {
     const url = normalizeUrl(rawUrl);
 
     if (!url && !manualText) {
-      return NextResponse.json(
+      return corsJson(
         { error: "url or manualText required" },
         { status: 400 }
       );
@@ -76,7 +93,7 @@ export async function POST(req: NextRequest) {
     }
 
     if (!text) {
-      return NextResponse.json(
+      return corsJson(
         {
           error: `Could not fetch the page. ${scrapeError ?? ""}. Paste the homepage text manually below and try again.`,
           scrape_failed: true,
@@ -87,27 +104,45 @@ export async function POST(req: NextRequest) {
 
     const msg = await client.messages.create({
       model: "claude-haiku-4-5-20251001",
-      max_tokens: 1024,
+      max_tokens: 1500,
       system: SYSTEM_PROMPT,
-      messages: [{ role: "user", content: userPrompt(url || "(pasted)", text) }],
+      tools: [
+        {
+          name: TOOL_NAME,
+          description:
+            "Submit the structured clarity audit for the given website. Return exactly one tool call.",
+          input_schema: CLARITY_AUDIT_TOOL_INPUT_SCHEMA,
+        },
+      ],
+      tool_choice: { type: "tool", name: TOOL_NAME },
+      messages: [
+        { role: "user", content: userPrompt(url || "(pasted)", text) },
+      ],
     });
 
-    const raw =
-      msg.content[0]?.type === "text" ? msg.content[0].text : "";
-    const json = extractJson(raw);
-    const audit = ClarityAuditSchema.parse(json);
+    const toolUse = msg.content.find((b) => b.type === "tool_use");
+    if (!toolUse || toolUse.type !== "tool_use") {
+      return corsJson(
+        { error: "model did not return a tool call" },
+        { status: 502 }
+      );
+    }
 
-    return NextResponse.json({
+    const audit = ClarityAuditSchema.parse(toolUse.input);
+
+    return corsJson({
       url: url || "(pasted text)",
       audit,
       meta: {
         text_chars: text.length,
         truncated: text.length > 8000,
         scrape_warning: scrapeError,
+        model: "claude-haiku-4-5-20251001",
+        framework: ["5-second test (Nielsen Norman)", "StoryBrand SB7"],
       },
     });
   } catch (err) {
     const message = err instanceof Error ? err.message : "unknown error";
-    return NextResponse.json({ error: message }, { status: 500 });
+    return corsJson({ error: message }, { status: 500 });
   }
 }
