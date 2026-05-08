@@ -1,17 +1,34 @@
 # Clarity Audit
 
-A 60-minute build for the Levvate AI Automation intern technical assessment, May 2026.
+Built for the Levvate AI Automation intern technical assessment, May 2026.
 
-**Live demo:** https://levvate-clarity.vercel.app
+**Live web app:** https://levvate-clarity.vercel.app
+**Chrome extension:** [`extension/`](./extension) (load unpacked at `chrome://extensions`)
 **Repo:** https://github.com/stylesgodeveloper/levvate-clarity-audit
 
-URL in. Out: a 1 to 2 sentence summary of what the business does, a 1 to 10 clarity score with reasoning, and 2 to 3 prioritized suggestions to improve the homepage's clarity.
+## Two surfaces, one backend, two real users
 
-## Sample audits captured live against the deployed API
+The brief asks for a tool that audits a website's messaging clarity. Most candidates will ship a text-box web app. I shipped two surfaces over the same `/api/analyze` endpoint because Levvate's clarity audit serves two distinct workflows, and a generic text box serves neither well:
 
-- `examples/stripe.json` — stripe.com, score 7 / 10
-- `examples/gentledental.json` — a real multi-location dental practice, score 6 / 10
-- `examples/sample.json` — a synthetic low-clarity consultancy, score 5 / 10
+**Inbound: the web app** at levvate.com today already says "Get My Free Site Assessment." The web app is a drop-in automation of that exact lead magnet. Prospect lands, enters their URL, gets a structured report, sales team books the meeting.
+
+**Outbound: the Chrome extension** is for Levvate's sales team browsing prospect sites pulled from LinkedIn Sales Nav, Apollo, or local-business scrapes. Click the icon while on a prospect's homepage, get the audit overlaid on the page, copy a ready-to-paste outreach hook into Gmail or LinkedIn. Zero context switching.
+
+Same backend, same Claude Haiku 4.5 + tool-use call, two surfaces matched to two users.
+
+## What the audit returns
+
+URL in. Out:
+
+- 1 to 2 sentence plain-language summary of what the business does
+- A 1 to 10 clarity score with framework-grounded reasoning
+- 2 to 3 ranked suggestions, each with the verbatim quoted issue, why it matters, and a concrete fix the developer could ship today
+
+## Sample audits captured live
+
+- `examples/stripe.json` — stripe.com, score 9 / 10 (anchored against Stripe-tier reference)
+- `examples/gentledental.json` — a real multi-location dental practice, score 5 / 10
+- `examples/linear.json` — linear.app, score 6 / 10
 
 ## How to run
 
@@ -25,10 +42,11 @@ Open http://localhost:3000, paste a URL, hit "Run audit." If a site blocks scrap
 
 ## Approach
 
-1. **Scrape** the URL with `fetch` and a desktop User-Agent. Strip `<script>`, `<style>`, comments, and tags down to plain text. If the request fails, the API surfaces a clear error so the UI can prompt for manual paste.
-2. **Schema-first LLM call.** A zod schema (`lib/schema.ts`) defines the audit shape. The system prompt embeds the JSON schema and a 1 to 10 scoring rubric. The model is asked to return JSON only.
-3. **Validate** the model output through zod before returning to the client. If the LLM drifts from the schema, the API returns a 500 with the validation error rather than render bad data.
-4. **Render** as cards (summary, score, prioritized suggestions). The "Export PDF" button uses `window.print()` plus print-friendly CSS, which is enough to ship a client-ready report without a heavyweight PDF dependency.
+1. **Scrape** the URL with `fetch` and a desktop User-Agent. Strip `<script>`, `<style>`, comments, and tags down to plain text. If the request fails, the UI prompts for a manual paste fallback (handy for JS-only or anti-bot sites).
+2. **Tool-use LLM call.** The endpoint calls Claude Haiku 4.5 with `tool_choice` forcing a single `submit_clarity_audit` call. The tool's input schema IS the audit shape. The model cannot return free-form prose; it must populate the structured fields. This eliminates a whole class of JSON-parsing failures.
+3. **Framework-grounded prompt.** The system prompt anchors evaluation in the 5-second test (Nielsen Norman Group) and StoryBrand SB7 (Donald Miller). Scores are anchored to reference brands ("Stripe-tier instant clarity = 9-10") to prevent drift to middling 7s. Suggestions must quote the source verbatim and propose a concrete rewrite, not generic advice.
+4. **Validate** the tool output through zod before returning. If the model somehow violates the schema, the API surfaces the error rather than render bad data.
+5. **Render** as cards (summary, score, prioritized suggestions with quoted issue + why it matters + fix). The web app's "Export PDF" button uses `window.print()` with print-friendly CSS. The extension's "Copy outreach hook" button generates a personalized cold-email scaffold from the top suggestion.
 
 ## Design choices and trade-offs
 

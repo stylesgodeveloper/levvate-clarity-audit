@@ -1,30 +1,32 @@
 {
     "url": "https://stripe.com",
     "audit": {
-        "business_summary": "Stripe is a financial infrastructure platform that enables businesses to accept payments, offer financial services, and build custom revenue models across online and in-person channels globally.",
-        "clarity_score": 7,
-        "clarity_reasoning": "The value proposition is clear\u2014financial infrastructure for payments and revenue growth\u2014but the homepage prioritizes breadth of features and social proof over a single, compelling entry point. First-time visitors understand what Stripe does, but the messaging dilutes focus across multiple audience segments (enterprises, startups, platforms).",
+        "business_summary": "Stripe provides financial infrastructure that enables businesses to accept payments, offer financial services, and implement custom revenue models globally, serving startups to Fortune 100 companies.",
+        "clarity_score": 9,
+        "clarity_reasoning": "Stripe passes the 5-second test decisively. The headline \"Financial infrastructure to grow your revenue\" immediately answers what the business does and who benefits (anyone wanting to grow). The subheading reinforces this with concrete outcomes (accept payments, offer financial services, implement custom revenue models). The single dominant CTA (\"Get started\") is unmissable, and the social proof (135+ currencies, $1.9T processed, 99.999% uptime) builds trust without confusing the core message. No jargon, no feature dumping before clarity.",
         "suggestions": [
             {
-                "issue": "The primary headline 'Financial infrastructure to grow your revenue' is repeated verbatim twice in the extracted text, suggesting weak hierarchy and no single clear entry point for first-time visitors.",
-                "action": "Replace the second occurrence with a specific, benefit-driven variant tailored to the visitor's most likely use case (e.g., 'Accept payments from day one, scale to billions in transactions' for new businesses).",
-                "priority": "high"
-            },
-            {
-                "issue": "The hero CTA is split between 'Get started' and 'Sign up with Google,' with no clear distinction of what each leads to or which path suits a first-time visitor.",
-                "action": "Consolidate to a single, prominent CTA (e.g., 'Start accepting payments') and move the secondary option below, reducing friction for new prospects.",
-                "priority": "high"
-            },
-            {
-                "issue": "The page leads with enterprise and platform solutions ('50% of Fortune 100,' 'Stripe for platforms') before addressing the majority use case of small-to-mid-market businesses, which may discourage smaller prospects.",
-                "action": "Reorder content sections to feature 'Stripe for startups' and 'Flexible solutions for every business model' higher, reserving enterprise case studies below the fold.",
+                "issue": "Get started Sign up with Google Flexible solutions for every business model.",
+                "why_it_matters": "The CTA lacks directional clarity\u2014'Get started' could mean signing up, building an integration, or requesting a consultation, creating friction for different visitor segments (developers vs. business decision-makers).",
+                "fix": "Replace with two distinct CTAs: 'Start accepting payments' (directs to signup flow) and 'Explore for enterprises' (directs to sales/consultation path). This acknowledges the StoryBrand principle that different personas need different next steps.",
                 "priority": "medium"
+            },
+            {
+                "issue": "Grow your business with a comprehensive set of payments and financial tools\u2060\u2014\u2060designed to work individually or together.",
+                "why_it_matters": "This sentence repeats the subheading almost verbatim ('comprehensive set of payments and financial tools') and dilutes the immediate value by focusing on how tools work together rather than outcomes for the visitor.",
+                "fix": "Replace with outcome-focused language: 'Accept payments in 135+ currencies, manage recurring billing for 200M+ subscriptions, and issue cards\u2014all from one platform.' This uses concrete proof instead of feature adjacency.",
+                "priority": "low"
             }
         ]
     },
     "meta": {
         "text_chars": 12878,
         "truncated": true,
-        "scrape_warning": null
+        "scrape_warning": null,
+        "model": "claude-haiku-4-5-20251001",
+        "framework": [
+            "5-second test (Nielsen Norman)",
+            "StoryBrand SB7"
+        ]
     }
 }

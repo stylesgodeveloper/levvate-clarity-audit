@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "Clarity Audit by Levvate",
+  "version": "0.1.0",
+  "description": "One-click website clarity audit for sales teams. Browse a prospect, click the icon, get a 1 to 10 clarity score and a copy-paste outreach hook without leaving the tab.",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Audit this page"
+  },
+  "permissions": ["activeTab"],
+  "host_permissions": [
+    "https://levvate-clarity.vercel.app/*"
+  ]
+}

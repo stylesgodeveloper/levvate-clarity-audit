@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Clarity Audit</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      width: 380px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 16px;
+      color: #111827;
+      background: #fff;
+    }
+    header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
+    h1 { font-size: 14px; margin: 0; font-weight: 600; }
+    .brand { font-size: 9px; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.5px; }
+    .url {
+      font-size: 11px;
+      color: #6b7280;
+      word-break: break-all;
+      margin: 4px 0 12px;
+      font-family: ui-monospace, monospace;
+    }
+    button {
+      width: 100%;
+      padding: 9px 12px;
+      background: #111827;
+      color: #fff;
+      border: 0;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    button:disabled { opacity: 0.5; cursor: default; }
+    button.secondary {
+      background: #fff;
+      color: #111827;
+      border: 1px solid #d1d5db;
+    }
+    button.secondary:hover { background: #f9fafb; }
+    .score-card {
+      text-align: center;
+      margin: 16px 0 12px;
+      padding: 12px;
+      background: #f9fafb;
+      border-radius: 8px;
+    }
+    .score {
+      font-size: 38px;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .score.high { color: #16a34a; }
+    .score.med { color: #d97706; }
+    .score.low { color: #dc2626; }
+    .score-label { font-size: 10px; color: #6b7280; margin-top: 4px; }
+    .summary { font-size: 12px; color: #1f2937; margin: 8px 0; line-height: 1.45; }
+    .reasoning { font-size: 11px; color: #6b7280; margin: 4px 0 12px; line-height: 1.45; }
+    .sug {
+      border-left: 3px solid #d1d5db;
+      padding: 6px 8px 6px 10px;
+      margin: 8px 0;
+      font-size: 11px;
+      background: #f9fafb;
+      border-radius: 0 4px 4px 0;
+    }
+    .sug.high { border-color: #dc2626; }
+    .sug.medium { border-color: #d97706; }
+    .sug.low { border-color: #6b7280; }
+    .sug-priority {
+      font-size: 9px;
+      color: #6b7280;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .sug-issue { font-style: italic; margin: 3px 0; color: #111827; }
+    .sug-why { color: #4b5563; line-height: 1.4; }
+    .sug-fix { margin-top: 4px; color: #111827; line-height: 1.4; }
+    .sug-fix-label { font-weight: 600; color: #6b7280; }
+    .err {
+      color: #991b1b;
+      font-size: 12px;
+      padding: 8px 10px;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      border-radius: 4px;
+      margin-top: 10px;
+    }
+    .copied {
+      color: #16a34a;
+      font-size: 11px;
+      margin-top: 8px;
+      text-align: center;
+      font-weight: 500;
+    }
+    .actions { display: flex; gap: 6px; margin-top: 12px; }
+    .actions button { flex: 1; font-size: 11px; padding: 7px 8px; }
+    .footer {
+      font-size: 9px;
+      color: #9ca3af;
+      text-align: center;
+      margin-top: 14px;
+      padding-top: 10px;
+      border-top: 1px solid #f3f4f6;
+    }
+    .loading { text-align: center; color: #6b7280; font-size: 12px; padding: 16px 0; }
+    .spinner {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border: 2px solid #e5e7eb;
+      border-top-color: #111827;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Clarity Audit</h1>
+    <span class="brand">Levvate</span>
+  </header>
+  <div class="url" id="url">Loading current tab...</div>
+  <button id="run">Run audit on this page</button>
+  <div id="status"></div>
+  <div id="result" style="display:none">
+    <div class="score-card">
+      <div class="score" id="score">-</div>
+      <div class="score-label">Clarity score / 10</div>
+    </div>
+    <div class="summary" id="summary"></div>
+    <div class="reasoning" id="reasoning"></div>
+    <div id="suggestions"></div>
+    <div class="actions">
+      <button class="secondary" id="copyHook">Copy outreach hook</button>
+      <button class="secondary" id="copyJson">Copy JSON</button>
+    </div>
+    <div class="copied" id="copied" style="display:none"></div>
+  </div>
+  <div class="footer">5-second test + StoryBrand · Claude Haiku 4.5</div>
+  <script src="popup.js"></script>
+</body>
+</html>

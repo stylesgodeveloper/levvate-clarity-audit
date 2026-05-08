@@ -1,0 +1,38 @@
+{
+    "url": "https://linear.app",
+    "audit": {
+        "business_summary": "Linear is an AI-native issue tracking and product development system that helps engineering teams plan, build, and ship products faster by integrating work management, AI agents, and code review in one platform.",
+        "clarity_score": 6,
+        "clarity_reasoning": "Linear's headline \"The product development system for teams and agents\" answers what the tool does, but buries the core value prop (speed, AI-powered workflows) below the fold and repeats the same tagline three times. A visitor can infer it's for product teams, but the specific outcome (ship faster, reduce noise) requires scrolling past feature demos. The messaging leans heavily on feature showcases (Issues, Agents, Diffs, Cycles) rather than leading with a concrete problem solved or outcome delivered. Multiple competing calls to action (Contact, Open app, Sign up, Docs) dilute focus.",
+        "suggestions": [
+            {
+                "issue": "The product development system for teams and agents",
+                "why_it_matters": "This headline fails the 5-second test because it doesn't clarify the outcome or value\u2014any project management tool could claim the same thing. A visitor doesn't know if Linear solves speed, collaboration, code quality, or visibility.",
+                "fix": "Replace with: 'Ship products 3x faster with AI-powered issue tracking and development workflows' or 'The AI system that turns customer feedback and PRs into shipping velocity'",
+                "priority": "high"
+            },
+            {
+                "issue": "Issue tracking is dead linear.app/next \u2192 Linear Inbox My issues Reviews Pulse Workspace Initiatives Projects More",
+                "why_it_matters": "This line appears to position Linear as a next-gen replacement for issue tracking, but it's immediately followed by a feature menu with no context about why issue tracking is 'dead' or what Linear does instead. It creates confusion rather than clarity.",
+                "fix": "Replace with a single, benefit-driven statement like: 'AI agents handle triage, prioritization, and code review\u2014so your team focuses on shipping.' This reinforces the core differentiator (AI automation) over a feature list.",
+                "priority": "high"
+            },
+            {
+                "issue": "Purpose-built for planning and building products. Designed for the AI era.",
+                "why_it_matters": "While this acknowledges the AI angle, 'purpose-built' and 'designed for the AI era' are vague marketing platitudes that don't explain how Linear specifically saves time, reduces friction, or changes workflows. It fails the StoryBrand principle of naming the customer's real problem.",
+                "fix": "Replace with: 'Automatically triage issues, route work to the right person, and delegate complex tasks to AI agents\u2014so teams ship with 100% focus and zero busywork.'",
+                "priority": "medium"
+            }
+        ]
+    },
+    "meta": {
+        "text_chars": 9695,
+        "truncated": true,
+        "scrape_warning": null,
+        "model": "claude-haiku-4-5-20251001",
+        "framework": [
+            "5-second test (Nielsen Norman)",
+            "StoryBrand SB7"
+        ]
+    }
+}
